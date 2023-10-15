@@ -1,1 +1,15 @@
 # praktikum_new_diplom
+# Сайт http://makeadish.ddns.net/
+
+Продуктовый помощник v1.0
+Автор Кузьмин Кирилл
+
+Использованы технологии 
+Django==3.2.16
+django-colorfield==0.7.2
+django-filter==22.1
+djangorestframework==3.14.0
+djoser==2.1.0
+drf-extra-fields==3.4.0
+psycopg2-binary==2.9.3
+gunicorn==20.1.0
