@@ -1,6 +1,7 @@
 from django.db import transaction
-from djoser.serializers import \
+from djoser.serializers import (
     UserCreateSerializer as DjoserUserCreateSerializer
+)
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from drf_extra_fields.fields import Base64ImageField
 from reciepts.models import Ingredient, Routing, Reciept, Tags
