@@ -18,7 +18,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install flake8 pep8-naming flake8-broken-line
-          pip install -r backend/requirements.txt
+          pip install -r backend/foodgram/requirements.txt
 
       - name: Test with flake8
         run: |
@@ -50,7 +50,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./backend
-          file: ./backend/Dockerfile
+          file: ./backend/foodgram/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/backend_foodgram:latest
 
