@@ -41,13 +41,13 @@ class Reciept(models.Model):
                                verbose_name='Автор рецепта',
                                related_name='reciept')
     name = models.CharField(verbose_name='Название', max_length=50)
-    description = models.TextField('Описание')
+    text = models.TextField('Описание')
     ingredients = models.ManyToManyField(Ingredient,
                                          through='Routing',
                                          verbose_name='Ингредиенты',
                                          related_name='reciepts')
     image = models.ImageField(upload_to='reciepts/images/')
-    timing = models.PositiveIntegerField(
+    cooking_time = models.PositiveIntegerField(
         'Время приготовления',
         validators=[MinValueValidator(1, 'Обозначте время приготовления')]
     )

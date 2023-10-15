@@ -36,5 +36,5 @@ class RecieptFilter(FilterSet):
 
     def get_is_in_shopping_cart(self, queryset, name, value):
         if value:
-            return queryset.filter(shop__author=self.request.user)
+            return queryset.filter(shopping__author=self.request.user)
         return queryset

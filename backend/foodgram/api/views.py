@@ -31,17 +31,19 @@ class IngredientViewSet(ListRetrieve):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = IngredientFilter
     search_fields = ['^name', ]
+    pagination_class = None
 
 
 class TagViewSet(ListRetrieve):
     queryset = Tags.objects.all()
     serializer_class = TagSerializer
     permission_classes = (IsAdminOrReadOnly,)
+    pagination_class = None
 
 
 class RecieptViewSet(viewsets.ModelViewSet):
     queryset = Reciept.objects.all()
-    serializer_class = RecieptReadSerializer
+    # serializer_class = RecieptReadSerializer
     permission_classes = (IsAuthorOrReadOnly | IsAdminOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecieptFilter
@@ -100,7 +102,7 @@ class RecieptViewSet(viewsets.ModelViewSet):
     def download_shopping_cart(self, request):
         string = f'Список покупок {request.user.username}\n'
         ingredients = Routing.objects.filter(
-            reciept__shop__author=request.user
+            reciept__shopping__author=request.user
         ).values(
             'ingredient__name', 'ingredient__value_unit'
         ).annotate(amount=Sum('amount'))

@@ -24,7 +24,7 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+g9hznfxttiu&xz!2vipxe9au-n$u8ivzgqj7=2dq8wor1o2^4'
+SECRET_KEY = os.getenv('SECRET_KEY')
 # SECRET_KEY = os.getenv('SECRET_KEY', 'default')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,26 +81,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'foodgram.wsgi.application'
 
-'''DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}'''
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # postgresql_psycopg2
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # 'USER': 'Kirill',
-        # 'PASSWORD': '12345',
-        # 'HOST': 'localhost',
-        # 'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',  # postgresql_psycopg2
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#         # 'USER': 'Kirill',
+#         # 'PASSWORD': '12345',
+#         # 'HOST': 'localhost',
+#         # 'PORT': '5432',
+#     }
+# }
 
 # ПОДРУБИТЬ БД!!!!!!
 # DATABASES = {

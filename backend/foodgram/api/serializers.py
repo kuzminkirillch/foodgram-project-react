@@ -53,7 +53,7 @@ class RoutingReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Routing
-        fields = ('id', 'name', 'value_unit', 'amount',)
+        fields = ('id', 'name', 'measurement_unit', 'amount',)
 
 
 class RecieptReadSerializer(serializers.ModelSerializer):
@@ -62,24 +62,24 @@ class RecieptReadSerializer(serializers.ModelSerializer):
         many=True, source='ingredient_list')
     author = UsersSerializer()
     image = Base64ImageField()
-    favorite = SerializerMethodField(read_only=True)
-    is_in_shopping_list = SerializerMethodField(read_only=True)
+    is_favorited = SerializerMethodField(read_only=True)
+    is_in_shopping_cart = SerializerMethodField(read_only=True)
 
     class Meta:
         model = Reciept
         fields = ('id', 'tags', 'author',
-                  'ingredients', 'favorite',
-                  'is_in_shopping_list', 'image',
-                  'name', 'text', 'timing',)
+                  'ingredients', 'is_favorited',
+                  'is_in_shopping_cart', 'image',
+                  'name', 'text', 'cooking_time',)
 
     def get_is_favorited(self, obj):
         user = self.context.get('request').user
         return not user.is_anonymous and user.favorite.filter(
-            recipe=obj).exists()
+            reciept=obj).exists()
 
     def get_is_in_shopping_cart(self, obj):
         user = self.context.get('request').user
-        return not user.is_anonymous and user.shop.filter(reciept=obj).exists()
+        return not user.is_anonymous and user.shopping.filter(reciept=obj).exists()
 
 
 class RoutingCreateSerializer(serializers.ModelSerializer):
@@ -100,7 +100,7 @@ class RecieptCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reciept
         fields = ('id', 'tags', 'author', 'ingredients',
-                  'image', 'name', 'text', 'timing',)
+                  'image', 'name', 'text', 'cooking_time',)
 
     def validate(self, data):
         ingredients = self.initial_data.get('ingredients')
@@ -127,10 +127,11 @@ class RecieptCreateSerializer(serializers.ModelSerializer):
 
     def create_ingredients(self, ingredients, reciept):
         for ingredient in ingredients:
-            ingredient = Ingredient.objects.get(id=ingredient['id'])
+            # ingredient = Ingredient.objects.get(id=ingredient['id'])
+            print(ingredient)
             Routing.objects.bulk_create(
                 [Routing(
-                    ingredient=ingredient, reciept=reciept,
+                    ingredient=Ingredient.objects.get(id=ingredient['id']), reciept=reciept,
                     amount=ingredient['amount']
                 )
                 ]
@@ -168,15 +169,15 @@ class RecieptShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reciept
-        fields = ('id', 'name', 'image', 'timing',)
+        fields = ('id', 'name', 'image', 'cooking_time',)
 
 
 class SubscribeSerializer(UsersSerializer):
-    reciepts = serializers.SerializerMethodField()
-    reciepts_count = serializers.SerializerMethodField()
+    recipes = serializers.SerializerMethodField()
+    recipes_count = serializers.SerializerMethodField()
 
     class Meta(UsersSerializer.Meta):
-        fields = UsersSerializer.Meta.fields + ('reciepts', 'reciepts_count')
+        fields = UsersSerializer.Meta.fields + ('recipes', 'recipes_count')
         read_only_fields = UsersSerializer.Meta.fields
 
     def get_recipes(self, obj):
@@ -187,5 +188,5 @@ class SubscribeSerializer(UsersSerializer):
             queryset = queryset[:int(limit)]
         return RecieptShortSerializer(queryset, many=True).data
 
-    def get_reciepts_count(self, obj):
+    def get_recipes_count(self, obj):
         return obj.reciept.count()
