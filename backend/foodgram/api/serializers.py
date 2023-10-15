@@ -79,7 +79,8 @@ class RecieptReadSerializer(serializers.ModelSerializer):
 
     def get_is_in_shopping_cart(self, obj):
         user = self.context.get('request').user
-        return not user.is_anonymous and user.shopping.filter(reciept=obj).exists()
+        return (not user.is_anonymous
+                and user.shopping.filter(reciept=obj).exists())
 
 
 class RoutingCreateSerializer(serializers.ModelSerializer):
@@ -127,11 +128,11 @@ class RecieptCreateSerializer(serializers.ModelSerializer):
 
     def create_ingredients(self, ingredients, reciept):
         for ingredient in ingredients:
-            # ingredient = Ingredient.objects.get(id=ingredient['id'])
             print(ingredient)
             Routing.objects.bulk_create(
                 [Routing(
-                    ingredient=Ingredient.objects.get(id=ingredient['id']), reciept=reciept,
+                    ingredient=Ingredient.objects.get(id=ingredient['id']),
+                    reciept=reciept,
                     amount=ingredient['amount']
                 )
                 ]

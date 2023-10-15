@@ -43,7 +43,6 @@ class TagViewSet(ListRetrieve):
 
 class RecieptViewSet(viewsets.ModelViewSet):
     queryset = Reciept.objects.all()
-    # serializer_class = RecieptReadSerializer
     permission_classes = (IsAuthorOrReadOnly | IsAdminOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecieptFilter
