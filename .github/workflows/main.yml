@@ -79,9 +79,9 @@ jobs:
             sudo docker compose rm backend
             sudo docker compose up -d
 
-            sudo docker compose exec -T backend python foodgram/manage.py makemigrations user
-            sudo docker compose exec -T backend python foodgram/manage.py makemigrations reciepts
-            sudo docker compose exec -T backend python foodgram/manage.py migrate
-            sudo docker compose exec -T backend python foodgram/manage.py collectstatic --no-input
-            sudo docker compose exec -T backend python foodgram/manage.py create_tags
-            sudo docker compose exec -T backend python foodgram/manage.py load_csv
+            sudo docker compose exec -T backend python manage.py makemigrations user
+            sudo docker compose exec -T backend python manage.py makemigrations reciepts
+            sudo docker compose exec -T backend python manage.py migrate
+            sudo docker compose exec -T backend python manage.py collectstatic --no-input
+            sudo docker compose exec -T backend python manage.py create_tags
+            sudo docker compose exec -T backend python manage.py load_csv
