@@ -2,7 +2,11 @@ from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
 class IsAuthorOrReadOnly(BasePermission):
-
+    """
+    Неавторизованным пользователям доступен только просмотр контента.
+    Если пользователь является администратором
+    или автором рецепта, то ему доступны остальные методы.
+    """
     def has_permission(self, request, view):
         return (request.method in SAFE_METHODS
                 or request.user.is_authenticated)
@@ -12,7 +16,11 @@ class IsAuthorOrReadOnly(BasePermission):
 
 
 class IsAdminOrReadOnly(BasePermission):
-
+    """
+    Неавторизованным пользователям доступен только просмотр контента.
+    Если пользователь является администратором
+    или автором рецепта, то ему доступны остальные методы.
+    """
     def has_permission(self, request, view):
         return (request.method in SAFE_METHODS
                 or request.user.is_staff)

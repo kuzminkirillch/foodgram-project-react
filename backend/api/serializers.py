@@ -13,7 +13,7 @@ from user.models import User
 
 
 class UserCreateSerializer(DjoserUserCreateSerializer):
-
+    """Сериалайзер модели User."""
     class Meta:
         model = User
         fields = ('email', 'username', 'first_name', 'last_name', 'password',)
@@ -34,20 +34,21 @@ class UsersSerializer(DjoserUserSerializer):
 
 
 class TagSerializer(serializers.ModelSerializer):
-
+    """Сериалайзер модели Tag."""
     class Meta:
         model = Tags
         fields = '__all__'
 
 
 class IngredientSerializer(serializers.ModelSerializer):
-
+    """Сериалайзер модели Ingredient."""
     class Meta:
         model = Ingredient
         fields = ('id', 'name', 'value_unit',)
 
 
 class RoutingReadSerializer(serializers.ModelSerializer):
+    """Сериалайзер модели Routing."""
     id = IntegerField(source='ingredient.id')
     name = serializers.CharField(source='ingredient.name')
     measurement_unit = serializers.CharField(
@@ -59,6 +60,7 @@ class RoutingReadSerializer(serializers.ModelSerializer):
 
 
 class RecieptReadSerializer(serializers.ModelSerializer):
+    """Сериалайзер модели Reciept."""
     tags = TagSerializer(many=True)
     ingredients = RoutingReadSerializer(
         many=True, source='ingredient_list')
@@ -86,6 +88,7 @@ class RecieptReadSerializer(serializers.ModelSerializer):
 
 
 class RoutingCreateSerializer(serializers.ModelSerializer):
+    """Сериалайзер модели Routing."""
     id = serializers.IntegerField()
     amount = serializers.IntegerField()
 
@@ -95,6 +98,7 @@ class RoutingCreateSerializer(serializers.ModelSerializer):
 
 
 class RecieptCreateSerializer(serializers.ModelSerializer):
+    """Сериалайзер модели Reciept."""
     ingredients = RoutingCreateSerializer(many=True)
     tags = PrimaryKeyRelatedField(queryset=Tags.objects.all(), many=True)
     author = UsersSerializer(read_only=True)
@@ -167,6 +171,7 @@ class RecieptCreateSerializer(serializers.ModelSerializer):
 
 
 class RecieptShortSerializer(serializers.ModelSerializer):
+    """Сериалайзер модели Reciept."""
     image = Base64ImageField()
 
     class Meta:
@@ -175,6 +180,7 @@ class RecieptShortSerializer(serializers.ModelSerializer):
 
 
 class SubscribeSerializer(UsersSerializer):
+    """Сериалайзер модели Subscribe."""
     recipes = serializers.SerializerMethodField()
     recipes_count = serializers.SerializerMethodField()
 

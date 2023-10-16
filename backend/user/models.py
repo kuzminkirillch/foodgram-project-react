@@ -3,6 +3,10 @@ from django.db import models
 
 
 class User(AbstractUser):
+    """
+    Кастомизированная модель пользователя.
+    Регистрация через электронную почту.
+    """
     email = models.EmailField('Email', max_length=200, unique=True)
     first_name = models.CharField('Имя', max_length=150)
     last_name = models.CharField('Фамилия', max_length=150)
@@ -19,6 +23,10 @@ class User(AbstractUser):
 
 
 class Subscribe(models.Model):
+    """
+    Модель подписок. Можно подписаться / отписаться 
+    на / от любого пользователя.
+    """
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

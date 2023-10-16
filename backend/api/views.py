@@ -24,6 +24,7 @@ User = get_user_model()
 
 
 class IngredientViewSet(ListRetrieve):
+    """Функция для модели ингредиентов."""
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -34,6 +35,7 @@ class IngredientViewSet(ListRetrieve):
 
 
 class TagViewSet(ListRetrieve):
+    """Функция для модели тегов."""
     queryset = Tags.objects.all()
     serializer_class = TagSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -41,6 +43,7 @@ class TagViewSet(ListRetrieve):
 
 
 class RecieptViewSet(viewsets.ModelViewSet):
+    """Функция для модели рецепта."""
     queryset = Reciept.objects.all()
     permission_classes = (IsAuthorOrReadOnly | IsAdminOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
@@ -120,6 +123,7 @@ class RecieptViewSet(viewsets.ModelViewSet):
 
 
 class CustomUserViewSet(UserViewSet):
+    """Функция для модели пользователя."""
     queryset = User.objects.all()
     serializer_class = UsersSerializer
     pagination_class = LimitPagination

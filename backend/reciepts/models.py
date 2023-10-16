@@ -7,6 +7,8 @@ User = get_user_model()
 
 
 class Ingredient(models.Model):
+    """Ингридиенты для рецептов."""
+
     name = models.CharField(verbose_name='Название', max_length=100,
                             db_index=True)
 
@@ -22,6 +24,8 @@ class Ingredient(models.Model):
 
 
 class Tags(models.Model):
+    """Тэги для рецептов с предустановленным выбором."""
+
     name = models.CharField(verbose_name='Название', unique=True,
                             max_length=100)
     slug = models.SlugField(verbose_name='Слаг', unique=True, max_length=30)
@@ -37,7 +41,9 @@ class Tags(models.Model):
 
 
 class Reciept(models.Model):
-
+    """
+    Модель для рецептов.
+    """
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                verbose_name='Автор рецепта',
                                related_name='reciept')
@@ -65,6 +71,9 @@ class Reciept(models.Model):
 
 
 class Routing(models.Model):
+    """
+    Технологическая карта создания рецепта и добавления ингридиентов
+    """
     reciept = models.ForeignKey(Reciept, on_delete=models.CASCADE,
                                 related_name='ingredient_list')
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
@@ -82,6 +91,9 @@ class Routing(models.Model):
 
 
 class Favorite(models.Model):
+    """
+    Избранные рецепты.
+    """
     reciept = models.ForeignKey(
         Reciept,
         on_delete=models.CASCADE,
@@ -110,6 +122,9 @@ class Favorite(models.Model):
 
 
 class ShoppingList(models.Model):
+    """
+    Список покупок. Можно выгрузить в формате txt.
+    """
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='shopping',
                                verbose_name='Пользователь')
