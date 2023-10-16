@@ -24,7 +24,7 @@ class User(AbstractUser):
 
 class Subscribe(models.Model):
     """
-    Модель подписок. Можно подписаться / отписаться 
+    Модель подписок. Можно подписаться / отписаться
     на / от любого пользователя.
     """
     user = models.ForeignKey(
