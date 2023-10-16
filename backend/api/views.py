@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet
-from reciepts.models import (Favorite, Ingredient, Routing, Reciept,
+from reciepts.models import (Favorite, Ingredient, Reciept, Routing,
                              ShoppingList, Tags)
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -16,10 +16,9 @@ from .filters import IngredientFilter, RecieptFilter
 from .mixins import ListRetrieve
 from .pagination import LimitPagination
 from .permissions import IsAdminOrReadOnly, IsAuthorOrReadOnly
-from .serializers import (SubscribeSerializer, IngredientSerializer,
-                          RecieptCreateSerializer, RecieptReadSerializer,
-                          RecieptShortSerializer, TagSerializer,
-                          UsersSerializer)
+from .serializers import (IngredientSerializer, RecieptCreateSerializer,
+                          RecieptReadSerializer, RecieptShortSerializer,
+                          SubscribeSerializer, TagSerializer, UsersSerializer)
 
 User = get_user_model()
 
@@ -140,7 +139,7 @@ class CustomUserViewSet(UserViewSet):
                 return Response({
                     'errors': 'Нельзя подписаться на самого себя'
                 }, status=status.HTTP_400_BAD_REQUEST)
-            if Subscribe.objects.filter(user=user, author=author).exists():
+            if user.subscriber.filter(author=author).exists():
                 return Response({
                     'errors': 'Вы уже подписаны на этого пользователя'
                 }, status=status.HTTP_400_BAD_REQUEST)

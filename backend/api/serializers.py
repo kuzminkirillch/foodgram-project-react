@@ -4,11 +4,12 @@ from djoser.serializers import (
 )
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from drf_extra_fields.fields import Base64ImageField
-from reciepts.models import Ingredient, Routing, Reciept, Tags
+from reciepts.models import Ingredient, Reciept, Routing, Tags
 from rest_framework import serializers
 from rest_framework.fields import IntegerField, SerializerMethodField
 from rest_framework.relations import PrimaryKeyRelatedField
-from user.models import Subscribe, User
+
+from user.models import User
 
 
 class UserCreateSerializer(DjoserUserCreateSerializer):
@@ -28,8 +29,8 @@ class UsersSerializer(DjoserUserSerializer):
 
     def get_is_subscribed(self, obj):
         user = self.context.get('request').user
-        return not user.is_anonymous and Subscribe.objects.filter(
-            user=user, author=obj).exists()
+        return not user.is_anonymous and user.subscriber.filter(
+            author=obj).exists()
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -129,7 +130,6 @@ class RecieptCreateSerializer(serializers.ModelSerializer):
 
     def create_ingredients(self, ingredients, reciept):
         for ingredient in ingredients:
-            print(ingredient)
             Routing.objects.bulk_create(
                 [Routing(
                     ingredient=Ingredient.objects.get(id=ingredient['id']),

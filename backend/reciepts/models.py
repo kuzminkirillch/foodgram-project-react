@@ -1,13 +1,14 @@
-from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
+from django.db import models
 from django.db.models import UniqueConstraint
 
 User = get_user_model()
 
 
 class Ingredient(models.Model):
-    name = models.CharField(verbose_name='Название', max_length=100)
+    name = models.CharField(verbose_name='Название', max_length=100,
+                            db_index=True)
 
     value_unit = models.CharField(verbose_name='Величина', max_length=100)
 
@@ -47,7 +48,7 @@ class Reciept(models.Model):
                                          verbose_name='Ингредиенты',
                                          related_name='reciepts')
     image = models.ImageField(upload_to='reciepts/images/')
-    cooking_time = models.PositiveIntegerField(
+    cooking_time = models.PositiveSmallIntegerField(
         'Время приготовления',
         validators=[MinValueValidator(1, 'Обозначте время приготовления')]
     )

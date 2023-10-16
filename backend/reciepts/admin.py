@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import (Favorite, Ingredient, Routing, Reciept, ShoppingList,
-                     Tags)
+
+from .models import Favorite, Ingredient, Reciept, Routing, ShoppingList, Tags
 
 
 class RoutingInline(admin.TabularInline):
