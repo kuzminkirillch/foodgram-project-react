@@ -9,7 +9,8 @@
 
 # FOODGRAM
 # Дипломный проект Яндекс.Практикум Python-разработчик. 60 когорта
-
+# Superuser: kirill@gmail.com
+# Password: Baltika_1995
 ---
 Доступен по адресу http://makeadish.ddns.net/recipes
 
