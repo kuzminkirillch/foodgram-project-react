@@ -116,7 +116,7 @@ cd foodgram
 **3. В директорию foodgram/ скопируйте или создайте файл .env:**
 
 ```
-scp -i <path_to_SSH/SSH_name> .env <username@server_ip>:/home/<username>/foodgram/.env
+* scp -i <path_to_SSH/SSH_name> .env <username@server_ip>:/home/<username>/foodgram/.env
 * ath_to_SSH — путь к файлу с SSH-ключом;
 * SSH_name — имя файла с SSH-ключом (без расширения);
 * username — ваше имя пользователя на сервере;
@@ -189,7 +189,6 @@ sudo docker compose -f docker-compose.yml exec backend python manage.py createsu
 - **tests:** Проверка кода на соответствие PEP8.
 - **push Docker image to Docker Hub:** Сборка и публикация образа на DockerHub.
 - **deploy:** Автоматический деплой на боевой сервер при пуше в главную ветку main.
-- **send_massage:** Отправка уведомления в телеграм-чат.
 
 ---
 ## Разработал:
