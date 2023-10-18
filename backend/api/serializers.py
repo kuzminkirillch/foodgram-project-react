@@ -190,7 +190,7 @@ class SubscribeSerializer(UsersSerializer):
 
     def get_recipes(self, obj):
         request = self.context.get('request')
-        limit = request.GET.get('reciepts_limit')
+        limit = request.GET.get('recipes_limit')
         queryset = obj.reciept.all()
         if limit:
             queryset = queryset[:int(limit)]

@@ -126,7 +126,6 @@ class CustomUserViewSet(UserViewSet):
     """Функция для модели пользователя."""
     queryset = User.objects.all()
     serializer_class = UsersSerializer
-    pagination_class = LimitPagination
 
     @action(
         detail=True,
