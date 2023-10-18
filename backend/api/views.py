@@ -45,7 +45,7 @@ class TagViewSet(ListRetrieve):
 class RecieptViewSet(viewsets.ModelViewSet):
     """Функция для модели рецепта."""
     queryset = Reciept.objects.all()
-    permission_classes = (IsAuthorOrReadOnly | IsAdminOrReadOnly,)
+    permission_classes = (IsAuthorOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecieptFilter
     pagination_class = LimitPagination
